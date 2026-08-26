@@ -1,0 +1,40 @@
+---
+import { nav } from "../lib/site";
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  description?: string;
+}
+
+const { eyebrow, title, description } = Astro.props;
+const current = nav.find((n) => n.href !== "/" && Astro.url.pathname.startsWith(n.href));
+---
+
+<section class="relative overflow-hidden bg-forest-800">
+  <div
+    class="pointer-events-none absolute inset-0 opacity-20"
+    style="background-image: radial-gradient(circle at 20% 20%, var(--color-gold-500), transparent 45%), radial-gradient(circle at 80% 80%, var(--color-bronze-500), transparent 45%);"
+    aria-hidden="true"
+  >
+  </div>
+  <div class="container-lumora relative py-16 text-center sm:py-20">
+    <nav aria-label="Breadcrumb" class="flex items-center justify-center gap-2 text-xs text-forest-300">
+      <a href="/" class="hover:text-white">Home</a>
+      {
+        current && (
+          <>
+            <span aria-hidden="true">/</span>
+            <span class="text-gold-300">{current.label}</span>
+          </>
+        )
+      }
+    </nav>
+    <p class="eyebrow mt-6 justify-center text-gold-300">
+      <span class="h-px w-6 bg-current opacity-70" aria-hidden="true" />
+      {eyebrow}
+    </p>
+    <h1 class="mt-4 text-4xl text-white sm:text-5xl">{title}</h1>
+    {description && <p class="mx-auto mt-5 max-w-2xl text-forest-200">{description}</p>}
+  </div>
+</section>

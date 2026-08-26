@@ -1,0 +1,131 @@
+---
+import { Icon } from "astro-icon/components";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import CtaBanner from "../components/CtaBanner.astro";
+import { services } from "../lib/site";
+import { unsplash } from "../lib/img";
+
+const process = [
+  {
+    step: "01",
+    title: "Enquire",
+    description: "Call, message or fill in our contact form to tell us about your project.",
+    icon: "chat-circle",
+  },
+  {
+    step: "02",
+    title: "Free Measure & Quote",
+    description: "A consultant visits your home to measure, show samples and provide a written quote.",
+    icon: "ruler",
+  },
+  {
+    step: "03",
+    title: "Custom Manufacturing",
+    description: "Your chosen products are made to measure specifically for your windows and floors.",
+    icon: "hammer",
+  },
+  {
+    step: "04",
+    title: "Expert Installation",
+    description: "Our own trained installers fit everything cleanly, backed by warranty.",
+    icon: "shield-check",
+  },
+];
+---
+
+<BaseLayout
+  title="Our Services"
+  description="Explore Lumora Interiors' full range of blinds, curtains, shutters and flooring services for Sydney homes."
+>
+  <PageHero
+    eyebrow="What We Do"
+    title="Our Services"
+    description="Four core services, one dedicated team — from first measure to final install."
+  />
+
+  {
+    services.map((service, index) => (
+      <section
+        id={service.slug}
+        class:list={["scroll-mt-24 section-pad", index % 2 === 1 && "bg-forest-50/60"]}
+      >
+        <div
+          class:list={[
+            "container-lumora grid items-center gap-12 lg:grid-cols-2 lg:gap-16",
+            index % 2 === 1 && "lg:[&>*:first-child]:order-2",
+          ]}
+        >
+          <div class="relative" data-reveal>
+            <div class="aspect-4/5 overflow-hidden rounded-[2rem] shadow-card sm:aspect-3/4">
+              <img
+                src={unsplash(service.image, 900)}
+                alt={`${service.name} installed in a Sydney home by Lumora Interiors`}
+                class="h-full w-full object-cover"
+                loading="lazy"
+                width="900"
+                height="1125"
+              />
+            </div>
+          </div>
+
+          <div data-reveal>
+            <span
+              class="flex size-14 items-center justify-center rounded-full bg-gold-500 text-forest-900 transition-transform duration-300 hover:scale-110"
+              data-pop
+            >
+              <Icon name={`ph:${service.icon}`} class="size-6" aria-hidden="true" />
+            </span>
+            <h2 class="mt-6 text-3xl text-forest-800 sm:text-4xl">{service.name}</h2>
+            <p class="mt-5 max-w-xl leading-relaxed text-ink/70">{service.description}</p>
+            <ul class="mt-8 grid gap-3 sm:grid-cols-2">
+              {service.features.map((feature) => (
+                <li class="flex items-start gap-2.5 text-sm text-ink/80">
+                  <Icon name="ph:check-circle" class="mt-0.5 size-5 shrink-0 text-gold-600" aria-hidden="true" />
+                  {feature}
+                </li>
+              ))}
+            </ul>
+            <a href="/contact/" class="btn-primary mt-9">
+              Get a Free Quote for {service.name}
+              <Icon name="ph:arrow-right" class="size-4" aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <!-- Process -->
+  <section class="section-pad bg-forest-800">
+    <div class="container-lumora">
+      <SectionHeading
+        align="center"
+        eyebrow="Our Process"
+        title="From free measure to finished install"
+        tone="light"
+        class="mx-auto max-w-2xl"
+      />
+      <div class="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          process.map((item) => (
+            <div class="relative rounded-2xl border border-forest-600 bg-forest-700/50 p-7" data-reveal>
+              <span class="font-display text-4xl text-forest-600">{item.step}</span>
+              <span
+                class="mt-3 flex size-12 items-center justify-center rounded-full bg-gold-500 text-forest-900 transition-transform duration-300 hover:scale-110"
+                data-pop
+              >
+                <Icon name={`ph:${item.icon}`} class="size-5" aria-hidden="true" />
+              </span>
+              <h3 class="mt-5 font-display text-lg text-white">{item.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-forest-200">{item.description}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CtaBanner />
+</BaseLayout>

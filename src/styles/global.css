@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand colors, sampled from the Lumora Interiors logo */
+  --color-forest-50: #f2f6f2;
+  --color-forest-100: #dfe9df;
+  --color-forest-200: #b9cdb9;
+  --color-forest-300: #8dac8d;
+  --color-forest-400: #5c8a5c;
+  --color-forest-500: #3d6b3d;
+  --color-forest-600: #2c542c;
+  --color-forest-700: #203920;
+  --color-forest-800: #1a2e1a;
+  --color-forest-900: #131f13;
+
+  --color-gold-50: #fbf6ea;
+  --color-gold-100: #f5e8c8;
+  --color-gold-200: #ecd393;
+  --color-gold-300: #e2bd66;
+  --color-gold-400: #d6ab48;
+  --color-gold-500: #cf9b2a;
+  --color-gold-600: #b5811f;
+  --color-gold-700: #8f651a;
+
+  --color-bronze-100: #ece4d7;
+  --color-bronze-300: #d3c1a4;
+  --color-bronze-500: #bca174;
+  --color-bronze-600: #a58a5d;
+  --color-bronze-700: #7f6a47;
+
+  --color-cream: #faf8f3;
+  --color-ink: #1c2416;
+
+  --font-display: "Noto Serif Display", "Georgia", serif;
+  --font-sans: "Elms Sans", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-soft: 0 20px 45px -20px rgba(32, 57, 32, 0.35);
+  --shadow-card: 0 10px 30px -12px rgba(28, 36, 22, 0.18);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background-color: var(--color-cream);
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: 0.02em;
+  }
+
+  ::selection {
+    background-color: var(--color-gold-300);
+    color: var(--color-forest-800);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold-500);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    [data-reveal], [data-pop] {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+}
+
+@layer components {
+  .container-lumora {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold tracking-wide transition-colors duration-200 cursor-pointer bg-gold-500 text-forest-900 hover:bg-gold-400;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold tracking-wide transition-colors duration-200 cursor-pointer border border-white/70 text-white hover:bg-white/10;
+  }
+
+  .btn-forest {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold tracking-wide transition-colors duration-200 cursor-pointer bg-forest-700 text-white hover:bg-forest-600;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-gold-600;
+  }
+
+  .section-pad {
+    @apply py-16 sm:py-20 lg:py-28;
+  }
+
+}
+
+/*
+  Scroll-driven reveal + icon-pop animations.
+  Pure CSS (animation-timeline: view()) so there is no JS/observer delay and
+  therefore no flash-of-visible-content on load: the browser resolves each
+  element's progress against its own scroll position synchronously at paint
+  time, so anything already in the initial viewport simply renders in its
+  "settled" state on first paint.
+*/
+@media not (prefers-reduced-motion: reduce) {
+  @supports (animation-timeline: view()) {
+    [data-reveal] {
+      animation-name: reveal-up;
+      animation-timing-function: ease-out;
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 30%;
+    }
+
+    [data-pop] {
+      animation-name: icon-pop;
+      animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 40%;
+    }
+  }
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes icon-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.4) rotate(-8deg);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.15) rotate(2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}

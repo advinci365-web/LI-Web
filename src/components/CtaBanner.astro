@@ -1,0 +1,26 @@
+---
+import { Icon } from "astro-icon/components";
+import { site } from "../lib/site";
+---
+
+<section class="bg-forest-800">
+  <div class="container-lumora flex flex-col items-center gap-6 py-14 text-center sm:py-16">
+    <p class="eyebrow text-gold-300">Ready when you are</p>
+    <h2 class="max-w-2xl text-3xl text-white sm:text-4xl">
+      Call us now for your <span class="text-gold-400">FREE</span> measure &amp; quote
+    </h2>
+    <p class="max-w-xl text-forest-200">
+      No obligation, no pressure &mdash; just honest advice on the right blinds, curtains, shutters or flooring for your home.
+    </p>
+    <div class="mt-2 flex flex-col gap-4 sm:flex-row">
+      <a href={site.phoneHref} class="btn-primary">
+        <Icon name="ph:phone" class="size-4" aria-hidden="true" />
+        {site.phone}
+      </a>
+      <a href="/contact/" class="btn-outline">
+        Request a Quote
+        <Icon name="ph:arrow-right" class="size-4" aria-hidden="true" />
+      </a>
+    </div>
+  </div>
+</section>

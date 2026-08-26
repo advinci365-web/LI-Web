@@ -1,0 +1,63 @@
+---
+import { Icon } from "astro-icon/components";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import { faqs, site } from "../lib/site";
+---
+
+<BaseLayout
+  title="Frequently Asked Questions"
+  description="Answers to common questions about Lumora Interiors' blinds, curtains, shutters and flooring services in Sydney."
+>
+  <PageHero
+    eyebrow="Support"
+    title="Frequently Asked Questions"
+    description="Everything you need to know before your free measure & quote. Can't find your answer? Get in touch."
+  />
+
+  <section class="section-pad">
+    <div class="container-lumora max-w-3xl">
+      {
+        faqs.map((group, gi) => (
+          <div class:list={[gi > 0 && "mt-12"]} data-reveal>
+            <h2 class="font-display text-xl text-forest-800 sm:text-2xl">{group.category}</h2>
+            <div class="mt-5 divide-y divide-forest-100 rounded-2xl border border-forest-100 bg-white">
+              {group.items.map((item) => (
+                <details class="group px-6 py-5 [&_summary::-webkit-details-marker]:hidden">
+                  <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-left font-medium text-forest-800">
+                    <span>{item.q}</span>
+                    <Icon
+                      name="ph:plus"
+                      class="size-5 shrink-0 text-gold-600 transition-transform duration-300 ease-out group-open:rotate-[135deg]"
+                      aria-hidden="true"
+                    />
+                  </summary>
+                  <p class="mt-4 leading-relaxed text-ink/70">{item.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section-pad bg-forest-50/60">
+    <div class="container-lumora flex flex-col items-center gap-5 text-center">
+      <h2 class="font-display text-2xl text-forest-800 sm:text-3xl">Still have questions?</h2>
+      <p class="max-w-md text-ink/70">
+        Our team is happy to talk through your project, no matter how big or small.
+      </p>
+      <div class="flex flex-col gap-4 sm:flex-row">
+        <a href={site.phoneHref} class="btn-primary">
+          <Icon name="ph:phone" class="size-4" aria-hidden="true" />
+          Call {site.phone}
+        </a>
+        <a href="/contact/" class="btn-forest">
+          Contact Us
+          <Icon name="ph:arrow-right" class="size-4" aria-hidden="true" />
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

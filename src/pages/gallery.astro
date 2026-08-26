@@ -1,0 +1,216 @@
+---
+import { Icon } from "astro-icon/components";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import CtaBanner from "../components/CtaBanner.astro";
+import { unsplash, photos } from "../lib/img";
+
+const filters = [
+  { key: "all", label: "All" },
+  { key: "blinds", label: "Blinds" },
+  { key: "curtains", label: "Curtains" },
+  { key: "shutters", label: "Shutters" },
+  { key: "flooring", label: "Flooring" },
+];
+
+const items = [
+  { id: photos.heroLiving, category: "blinds", caption: "Double roller blinds, family living room" },
+  { id: photos.curtainsLiving, category: "curtains", caption: "Sheer & blockout curtains, open-plan living" },
+  { id: photos.shuttersBathroom, category: "shutters", caption: "PVC plantation shutters, ensuite bathroom" },
+  { id: photos.flooringHallway, category: "flooring", caption: "Engineered timber flooring, entry hallway" },
+  { id: photos.heroBlindsCloseup, category: "blinds", caption: "Sunscreen roller blind, detail finish" },
+  { id: photos.bedroomCurtains, category: "curtains", caption: "Linen-look curtains, master bedroom" },
+  { id: photos.interiorWide, category: "shutters", caption: "Timber shutters, open living area" },
+  { id: photos.livingSofa, category: "flooring", caption: "Hybrid flooring, living & dining zone" },
+  { id: photos.windowFabric, category: "blinds", caption: "Blockout blind, home office" },
+  { id: photos.hallwayLight, category: "curtains", caption: "Pinch-pleat curtains, hallway window" },
+  { id: photos.modernInterior, category: "shutters", caption: "PVC shutters, contemporary apartment" },
+  { id: photos.interiorCozy, category: "flooring", caption: "Timber flooring, cosy reading nook" },
+  { id: photos.interiorNeutral, category: "blinds", caption: "Double roller blinds, neutral palette" },
+  { id: photos.bedroomLight, category: "curtains", caption: "Sheer curtains, morning light bedroom" },
+  { id: photos.apartmentModern, category: "shutters", caption: "Timber shutters, city apartment" },
+  { id: photos.bedroomSoft, category: "flooring", caption: "Laminate flooring, guest bedroom" },
+  { id: photos.livingMinimal, category: "blinds", caption: "Minimalist blinds, open living space" },
+  { id: photos.loungeCorner, category: "curtains", caption: "Custom curtains, reading corner" },
+  { id: photos.livingBright, category: "shutters", caption: "Plantation shutters, bright living room" },
+  { id: photos.livingWarm, category: "flooring", caption: "Warm-tone timber flooring, living room" },
+];
+---
+
+<BaseLayout
+  title="Gallery"
+  description="Browse completed blinds, curtains, shutters and flooring projects by Lumora Interiors across Sydney."
+>
+  <PageHero
+    eyebrow="Our Work"
+    title="Gallery"
+    description="A selection of recently completed projects across Sydney homes."
+  />
+
+  <section class="section-pad">
+    <div class="container-lumora">
+      <div class="flex flex-wrap justify-center gap-3" role="group" aria-label="Filter gallery by category">
+        {
+          filters.map((filter, i) => (
+            <button
+              type="button"
+              data-filter={filter.key}
+              aria-pressed={i === 0 ? "true" : "false"}
+              class:list={[
+                "gallery-filter rounded-full border px-5 py-2.5 text-sm font-semibold tracking-wide transition-colors cursor-pointer",
+                i === 0
+                  ? "border-forest-800 bg-forest-800 text-white"
+                  : "border-forest-200 text-forest-800 hover:border-forest-800",
+              ]}
+            >
+              {filter.label}
+            </button>
+          ))
+        }
+      </div>
+
+      <div id="gallery-grid" class="mt-12 grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-4">
+        {
+          items.map((item, i) => (
+            <button
+              type="button"
+              class="gallery-item group relative aspect-square overflow-hidden rounded-2xl text-left"
+              data-reveal
+              data-category={item.category}
+              data-index={i}
+              data-full={unsplash(item.id, 1400)}
+              data-caption={item.caption}
+              aria-label={`View larger image: ${item.caption}`}
+            >
+              <img
+                src={unsplash(item.id, 500)}
+                alt={item.caption}
+                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+                width="500"
+                height="500"
+              />
+              <span class="absolute inset-x-3 bottom-3 flex items-center justify-between gap-2 rounded-full bg-forest-900/80 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-white opacity-0 transition-opacity group-hover:opacity-100">
+                {item.category}
+                <Icon name="ph:magnifying-glass-plus" class="size-3.5" aria-hidden="true" />
+              </span>
+            </button>
+          ))
+        }
+      </div>
+
+      <p id="gallery-empty" class="mt-16 hidden text-center text-ink/60">
+        No projects in this category yet &mdash; check back soon or ask us to see more examples.
+      </p>
+    </div>
+  </section>
+
+  <dialog
+    id="lightbox"
+    class="fixed inset-0 m-auto w-full max-w-4xl rounded-2xl bg-transparent p-0 backdrop:bg-forest-900/90"
+  >
+    <div class="relative bg-forest-900">
+      <button
+        type="button"
+        id="lightbox-close"
+        aria-label="Close image"
+        class="absolute right-3 top-3 z-10 flex size-10 items-center justify-center rounded-full bg-forest-900/70 text-white hover:bg-forest-900"
+      >
+        <Icon name="ph:x" class="size-5" aria-hidden="true" />
+      </button>
+      <img id="lightbox-image" src="" alt="" class="max-h-[75vh] w-full object-contain" />
+      <div class="flex items-center justify-between gap-4 p-4">
+        <button
+          type="button"
+          id="lightbox-prev"
+          aria-label="Previous image"
+          class="flex size-10 items-center justify-center rounded-full border border-forest-600 text-white hover:bg-forest-700"
+        >
+          <Icon name="ph:caret-left" class="size-5" aria-hidden="true" />
+        </button>
+        <p id="lightbox-caption" class="text-center text-sm text-forest-100"></p>
+        <button
+          type="button"
+          id="lightbox-next"
+          aria-label="Next image"
+          class="flex size-10 items-center justify-center rounded-full border border-forest-600 text-white hover:bg-forest-700"
+        >
+          <Icon name="ph:caret-right" class="size-5" aria-hidden="true" />
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <CtaBanner />
+</BaseLayout>
+
+<script>
+  const filterButtons = Array.from(document.querySelectorAll<HTMLButtonElement>(".gallery-filter"));
+  const galleryItems = Array.from(document.querySelectorAll<HTMLButtonElement>(".gallery-item"));
+  const emptyState = document.getElementById("gallery-empty");
+
+  let visibleItems = galleryItems.slice();
+
+  function applyFilter(category: string) {
+    visibleItems = [];
+    galleryItems.forEach((item) => {
+      const match = category === "all" || item.dataset.category === category;
+      item.classList.toggle("hidden", !match);
+      if (match) visibleItems.push(item);
+    });
+    emptyState?.classList.toggle("hidden", visibleItems.length > 0);
+  }
+
+  filterButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      filterButtons.forEach((b) => {
+        const active = b === btn;
+        b.setAttribute("aria-pressed", String(active));
+        b.classList.toggle("bg-forest-800", active);
+        b.classList.toggle("text-white", active);
+        b.classList.toggle("border-forest-800", active);
+        b.classList.toggle("border-forest-200", !active);
+      });
+      applyFilter(btn.dataset.filter ?? "all");
+    });
+  });
+
+  const dialog = document.getElementById("lightbox") as HTMLDialogElement | null;
+  const lightboxImage = document.getElementById("lightbox-image") as HTMLImageElement | null;
+  const lightboxCaption = document.getElementById("lightbox-caption");
+  const closeBtn = document.getElementById("lightbox-close");
+  const prevBtn = document.getElementById("lightbox-prev");
+  const nextBtn = document.getElementById("lightbox-next");
+
+  let currentIndex = 0;
+
+  function openAt(index: number) {
+    if (!dialog || !lightboxImage || !lightboxCaption || visibleItems.length === 0) return;
+    currentIndex = (index + visibleItems.length) % visibleItems.length;
+    const item = visibleItems[currentIndex];
+    lightboxImage.src = item.dataset.full ?? "";
+    lightboxImage.alt = item.dataset.caption ?? "";
+    lightboxCaption.textContent = item.dataset.caption ?? "";
+    if (!dialog.open) dialog.showModal();
+  }
+
+  galleryItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      const idx = visibleItems.indexOf(item);
+      openAt(idx === -1 ? 0 : idx);
+    });
+  });
+
+  closeBtn?.addEventListener("click", () => dialog?.close());
+  prevBtn?.addEventListener("click", () => openAt(currentIndex - 1));
+  nextBtn?.addEventListener("click", () => openAt(currentIndex + 1));
+
+  dialog?.addEventListener("click", (e) => {
+    if (e.target === dialog) dialog.close();
+  });
+
+  dialog?.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") openAt(currentIndex - 1);
+    if (e.key === "ArrowRight") openAt(currentIndex + 1);
+  });
+</script>

@@ -1,0 +1,227 @@
+---
+import { Icon } from "astro-icon/components";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import { site, services } from "../lib/site";
+---
+
+<BaseLayout
+  title="Contact"
+  description="Get in touch with Lumora Interiors for a free measure & quote on blinds, curtains, shutters or flooring in Sydney."
+>
+  <PageHero
+    eyebrow="Get In Touch"
+    title="Contact Us"
+    description="Request your free, obligation-free measure & quote — we're here to help."
+  />
+
+  <section class="section-pad">
+    <div class="container-lumora grid gap-12 lg:grid-cols-5 lg:gap-16">
+      <div class="lg:col-span-3" data-reveal>
+        <h2 class="font-display text-2xl text-forest-800">Request a Free Quote</h2>
+        <p class="mt-3 text-ink/70">
+          Fill in the form and we'll be in touch to arrange your free in-home measure.
+        </p>
+
+        <form id="contact-form" class="mt-8 grid gap-5 sm:grid-cols-2" novalidate>
+          <div class="sm:col-span-1">
+            <label for="name" class="mb-2 block text-sm font-medium text-forest-800">
+              Full Name <span class="text-gold-600" aria-hidden="true">*</span>
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              autocomplete="name"
+              class="w-full rounded-xl border border-forest-200 bg-white px-4 py-3 text-sm outline-none focus:border-forest-500"
+            />
+          </div>
+          <div class="sm:col-span-1">
+            <label for="phone" class="mb-2 block text-sm font-medium text-forest-800">
+              Phone Number <span class="text-gold-600" aria-hidden="true">*</span>
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              required
+              autocomplete="tel"
+              class="w-full rounded-xl border border-forest-200 bg-white px-4 py-3 text-sm outline-none focus:border-forest-500"
+            />
+          </div>
+          <div class="sm:col-span-2">
+            <label for="email" class="mb-2 block text-sm font-medium text-forest-800">
+              Email Address <span class="text-gold-600" aria-hidden="true">*</span>
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              autocomplete="email"
+              class="w-full rounded-xl border border-forest-200 bg-white px-4 py-3 text-sm outline-none focus:border-forest-500"
+            />
+          </div>
+          <div class="sm:col-span-1">
+            <label for="suburb" class="mb-2 block text-sm font-medium text-forest-800">Suburb</label>
+            <input
+              type="text"
+              id="suburb"
+              name="suburb"
+              autocomplete="address-level2"
+              class="w-full rounded-xl border border-forest-200 bg-white px-4 py-3 text-sm outline-none focus:border-forest-500"
+            />
+          </div>
+          <div class="sm:col-span-1">
+            <label for="service" class="mb-2 block text-sm font-medium text-forest-800">
+              Service Interested In
+            </label>
+            <select
+              id="service"
+              name="service"
+              class="w-full rounded-xl border border-forest-200 bg-white px-4 py-3 text-sm outline-none focus:border-forest-500"
+            >
+              <option value="">Select a service</option>
+              {services.map((s) => <option value={s.name}>{s.name}</option>)}
+              <option value="Multiple / Not sure">Multiple / Not sure</option>
+            </select>
+          </div>
+          <div class="sm:col-span-2">
+            <label for="message" class="mb-2 block text-sm font-medium text-forest-800">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="5"
+              placeholder="Tell us a little about your project..."
+              class="w-full resize-y rounded-xl border border-forest-200 bg-white px-4 py-3 text-sm outline-none focus:border-forest-500"
+            ></textarea>
+          </div>
+
+          <p id="form-error" class="sm:col-span-2 hidden text-sm text-red-600" role="alert" tabindex="-1">
+            Please fill in your name, phone and a valid email address before sending.
+          </p>
+
+          <div class="sm:col-span-2">
+            <button type="submit" class="btn-primary w-full sm:w-auto">
+              Send Enquiry
+              <Icon name="ph:paper-plane-tilt" class="size-4" aria-hidden="true" />
+            </button>
+            <p class="mt-3 text-xs text-ink/50">
+              Sending opens your email app with the details pre-filled, ready for you to review and send to us.
+            </p>
+          </div>
+        </form>
+      </div>
+
+      <div class="lg:col-span-2" data-reveal>
+        <div class="rounded-2xl bg-forest-800 p-8 text-white">
+          <h2 class="font-display text-xl">Contact Details</h2>
+          <ul class="mt-6 space-y-5 text-sm">
+            <li class="flex items-start gap-3">
+              <Icon name="ph:phone" class="mt-0.5 size-5 shrink-0 text-gold-400" aria-hidden="true" />
+              <div>
+                <p class="text-forest-300">Phone</p>
+                <a href={site.phoneHref} class="font-medium hover:text-gold-300">{site.phone}</a>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <Icon name="ph:envelope" class="mt-0.5 size-5 shrink-0 text-gold-400" aria-hidden="true" />
+              <div>
+                <p class="text-forest-300">Email</p>
+                <a href={site.emailHref} class="font-medium hover:text-gold-300 break-all">{site.email}</a>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <Icon name="ph:map-pin" class="mt-0.5 size-5 shrink-0 text-gold-400" aria-hidden="true" />
+              <div>
+                <p class="text-forest-300">Service Area</p>
+                <p class="font-medium">{site.serviceArea}</p>
+              </div>
+            </li>
+          </ul>
+
+          <h3 class="mt-8 font-display text-base">Business Hours</h3>
+          <ul class="mt-4 space-y-2 text-sm text-forest-200">
+            {
+              site.hours.map((h) => (
+                <li class="flex items-center justify-between gap-4 border-b border-forest-700 pb-2">
+                  <span>{h.day}</span>
+                  <span class="text-white">{h.time}</span>
+                </li>
+              ))
+            }
+          </ul>
+
+          <div class="mt-8 flex items-center gap-3">
+            <a
+              href={site.social.instagram}
+              aria-label="Lumora Interiors on Instagram"
+              class="flex size-10 items-center justify-center rounded-full border border-forest-600 transition-all duration-300 hover:scale-110 hover:border-gold-400 hover:text-gold-400"
+            >
+              <Icon name="ph:instagram-logo" class="size-5" aria-hidden="true" />
+            </a>
+            <a
+              href={site.social.facebook}
+              aria-label="Lumora Interiors on Facebook"
+              class="flex size-10 items-center justify-center rounded-full border border-forest-600 transition-all duration-300 hover:scale-110 hover:border-gold-400 hover:text-gold-400"
+            >
+              <Icon name="ph:facebook-logo" class="size-5" aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+
+        <div class="mt-6 overflow-hidden rounded-2xl border border-forest-100">
+          <iframe
+            title="Lumora Interiors service area map — Sydney, NSW"
+            src="https://www.google.com/maps?q=Sydney,NSW,Australia&output=embed"
+            width="100%"
+            height="300"
+            style="border:0"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script is:inline define:vars={{ email: site.email }}>
+  const form = document.getElementById("contact-form");
+  const errorMsg = document.getElementById("form-error");
+
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    const name = String(data.get("name") || "").trim();
+    const phone = String(data.get("phone") || "").trim();
+    const emailValue = String(data.get("email") || "").trim();
+    const emailValid = /.+@.+\..+/.test(emailValue);
+
+    if (!name || !phone || !emailValid) {
+      errorMsg?.classList.remove("hidden");
+      errorMsg?.focus();
+      return;
+    }
+    errorMsg?.classList.add("hidden");
+
+    const suburb = String(data.get("suburb") || "—");
+    const service = String(data.get("service") || "—");
+    const message = String(data.get("message") || "—");
+
+    const subject = `Free Quote Enquiry from ${name}`;
+    const body = [
+      `Name: ${name}`,
+      `Phone: ${phone}`,
+      `Email: ${emailValue}`,
+      `Suburb: ${suburb}`,
+      `Service: ${service}`,
+      "",
+      "Message:",
+      message,
+    ].join("\n");
+
+    window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  });
+</script>
