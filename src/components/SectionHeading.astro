@@ -14,7 +14,6 @@ const { eyebrow, title, align = "left", tone = "dark", class: className = "" } =
   {
     eyebrow && (
       <p class:list={["eyebrow", tone === "light" && "text-gold-300"]}>
-        <span class="h-px w-6 bg-current opacity-70" aria-hidden="true" />
         {eyebrow}
       </p>
     )
