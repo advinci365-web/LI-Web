@@ -4,8 +4,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 import TrustBadges from "../components/TrustBadges.astro";
 import CtaBanner from "../components/CtaBanner.astro";
-import { services, site } from "../lib/site";
-import { unsplash, photos } from "../lib/img";
+import { site } from "../lib/site";
 
 const stats = [
   { value: "500+", label: "Projects Completed" },
@@ -58,10 +57,10 @@ const testimonials = [
 ];
 
 const galleryPreview = [
-  { src: photos.curtainsLiving, label: "Curtains" },
-  { src: photos.shuttersBathroom, label: "Shutters" },
-  { src: photos.heroBlindsCloseup, label: "Blinds" },
-  { src: photos.flooringHallway, label: "Flooring" },
+  { src: "/images/gallery/curtains/curtains-1.jpg", label: "Curtains" },
+  { src: "/images/gallery/shutters/shutters-1.jpg", label: "Shutters" },
+  { src: "/images/gallery/blinds/blinds-1.jpg", label: "Blinds" },
+  { src: "/images/gallery/flooring/flooring-1.jpg", label: "Flooring" },
 ];
 ---
 
@@ -74,8 +73,8 @@ const galleryPreview = [
     class="relative flex min-h-[560px] items-center overflow-hidden bg-forest-900 sm:min-h-[620px] lg:min-h-[720px]"
   >
     <img
-      src={unsplash(photos.heroLiving, 1920, 80)}
-      alt="Elegant living room with floor-to-ceiling windows, layered curtains and roller blinds"
+      src="/images/hero/living-room.jpg"
+      alt="Living room with venetian blinds, sheer and blockout curtains, and plantation shutters"
       class="absolute inset-0 h-full w-full object-cover"
       loading="eager"
       fetchpriority="high"
@@ -124,56 +123,35 @@ const galleryPreview = [
     </div>
   </section>
 
-  <!-- Services strip -->
-  <div class="bg-forest-800">
-    <div class="container-lumora grid grid-cols-2 gap-8 py-10 sm:grid-cols-4 sm:gap-6">
-      {
-        services.map((service) => (
-          <a
-            href={`/services/#${service.slug}`}
-            class="group flex flex-col items-center gap-3 text-center"
-            data-reveal
-          >
-            <span
-              class="flex size-14 items-center justify-center rounded-full bg-forest-700 text-gold-400 transition-all duration-300 group-hover:scale-110 group-hover:bg-gold-500 group-hover:text-forest-900"
-              data-pop
-            >
-              <Icon name={`ph:${service.icon}`} class="size-6" aria-hidden="true" />
-            </span>
-            <span class="font-display text-sm tracking-wide text-white">{service.name}</span>
-            <span class="hidden text-xs leading-snug text-forest-200 sm:block">{service.short}</span>
-          </a>
-        ))
-      }
+  <!-- Trust badges -->
+  <section class="bg-forest-800 py-10 sm:py-12 lg:py-14">
+    <div class="container-lumora">
+      <SectionHeading
+        align="center"
+        tone="light"
+        size="sm"
+        title="Why homeowners choose Lumora Interiors"
+        class="mx-auto max-w-2xl"
+      />
+      <div class="mt-8">
+        <TrustBadges />
+      </div>
     </div>
-  </div>
+  </section>
 
   <!-- About / expertise -->
   <section class="section-pad">
     <div class="container-lumora grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-      <div class="relative" data-reveal>
+      <div data-reveal>
         <div class="aspect-4/5 overflow-hidden rounded-[2rem]">
           <img
-            src={unsplash(photos.aboutInterior, 900)}
-            alt="Bright home interior styled with custom soft furnishings"
+            src="/images/about/living-room.jpg"
+            alt="Sunlit living room with sheer and blockout curtains and herringbone timber flooring"
             class="h-full w-full object-cover"
             loading="lazy"
-            width="900"
-            height="1125"
+            width="1190"
+            height="1322"
           />
-        </div>
-        <div class="absolute -bottom-8 -right-6 w-52 rounded-2xl border-4 border-cream bg-white p-4 shadow-card sm:w-60">
-          <img
-            src={unsplash(photos.aboutInstall, 400)}
-            alt="Installer fitting plantation shutters"
-            class="h-28 w-full rounded-lg object-cover"
-            loading="lazy"
-            width="400"
-            height="220"
-          />
-          <p class="mt-3 text-xs font-semibold uppercase tracking-wide text-forest-700">
-            Installed by our own expert team
-          </p>
         </div>
       </div>
 
@@ -207,9 +185,50 @@ const galleryPreview = [
     </div>
   </section>
 
+  <!-- Gallery preview -->
+  <section class="pt-0 pb-16 sm:pb-20 lg:pb-28">
+    <div class="container-lumora">
+      <SectionHeading
+        align="center"
+        eyebrow="Our Work"
+        title="A glimpse into recently completed projects."
+        class="mx-auto max-w-2xl"
+      />
+
+      <div class="mt-10 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
+        {
+          galleryPreview.map((item) => (
+            <a
+              href="/gallery/"
+              class="group relative aspect-square overflow-hidden rounded-2xl"
+              data-reveal
+            >
+              <img
+                src={item.src}
+                alt={`${item.label} project by Lumora Interiors`}
+                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+              />
+              <span class="absolute inset-x-3 bottom-3 rounded-full bg-forest-900/80 px-3 py-1.5 text-center text-xs font-semibold uppercase tracking-wide text-white">
+                {item.label}
+              </span>
+            </a>
+          ))
+        }
+      </div>
+
+      <div class="mt-10 text-center">
+        <a href="/gallery/" class="btn-forest">
+          View Full Gallery
+          <Icon name="ph:arrow-right" class="size-4" aria-hidden="true" />
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- What we offer -->
   <section class="bg-forest-800 section-pad">
-    <div class="container-lumora grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+    <div class="container-lumora grid items-stretch gap-12 lg:grid-cols-2 lg:gap-16">
       <div data-reveal>
         <SectionHeading
           eyebrow="What We Offer"
@@ -240,63 +259,16 @@ const galleryPreview = [
       </div>
 
       <div class="relative hidden lg:block" data-reveal>
-        <div class="aspect-3/4 overflow-hidden rounded-[2rem]">
+        <div class="h-full min-h-[420px] overflow-hidden rounded-[2rem]">
           <img
-            src={unsplash(photos.offerLiving, 900)}
-            alt="Living room styled with layered curtains and warm timber flooring"
+            src="/images/offer/measure.jpg"
+            alt="Lumora Interiors consultant measuring a window for a custom roman blind"
             class="h-full w-full object-cover"
             loading="lazy"
-            width="900"
-            height="1200"
+            width="1254"
+            height="1254"
           />
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Gallery preview -->
-  <section class="section-pad">
-    <div class="container-lumora">
-      <div class="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
-        <SectionHeading eyebrow="Our Work" title="A glimpse into recently completed projects." />
-        <a href="/gallery/" class="btn-forest shrink-0">
-          View Full Gallery
-          <Icon name="ph:arrow-right" class="size-4" aria-hidden="true" />
-        </a>
-      </div>
-
-      <div class="mt-10 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
-        {
-          galleryPreview.map((item) => (
-            <a
-              href="/gallery/"
-              class="group relative aspect-square overflow-hidden rounded-2xl"
-              data-reveal
-            >
-              <img
-                src={unsplash(item.src, 600)}
-                alt={`${item.label} project by Lumora Interiors`}
-                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                loading="lazy"
-                width="600"
-                height="600"
-              />
-              <span class="absolute inset-x-3 bottom-3 rounded-full bg-forest-900/80 px-3 py-1.5 text-center text-xs font-semibold uppercase tracking-wide text-white">
-                {item.label}
-              </span>
-            </a>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <!-- Trust badges -->
-  <section class="section-pad bg-forest-50/60">
-    <div class="container-lumora">
-      <SectionHeading align="center" title="Why homeowners choose Lumora Interiors" class="mx-auto max-w-2xl" />
-      <div class="mt-14">
-        <TrustBadges />
       </div>
     </div>
   </section>

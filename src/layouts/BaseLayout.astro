@@ -3,7 +3,6 @@ import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { site } from "../lib/site";
-import { unsplash, photos } from "../lib/img";
 
 interface Props {
   title: string;
@@ -13,7 +12,7 @@ interface Props {
 
 const { title, description, image } = Astro.props;
 const pageTitle = `${title} | ${site.name}`;
-const ogImage = image ?? unsplash(photos.heroLiving, 1200, 75, 630);
+const ogImage = image ?? `${site.url}/images/hero/living-room.jpg`;
 const canonicalUrl = new URL(Astro.url.pathname, site.url).toString();
 
 const dayHoursMap: Record<string, string[]> = {
@@ -53,7 +52,7 @@ const structuredData = {
   url: site.url,
   telephone: site.phoneHref.replace("tel:", ""),
   email: site.email,
-  image: unsplash(photos.heroLiving, 1200, 75, 630),
+  image: `${site.url}/images/hero/living-room.jpg`,
   logo: `${site.url}/images/logo/circle-logo.svg`,
   address: {
     "@type": "PostalAddress",
@@ -65,7 +64,7 @@ const structuredData = {
     "@type": "City",
     name: "Sydney",
   },
-  sameAs: [site.social.instagram, site.social.facebook],
+  sameAs: [site.social.facebook, site.social.tiktok],
   openingHoursSpecification: openingHours,
 };
 ---
