@@ -9,8 +9,9 @@ export const site = {
   serviceArea: "Serving Sydney & Surrounding Areas",
   address: "Sydney, NSW, Australia",
   social: {
-    instagram: "https://instagram.com",
-    facebook: "https://facebook.com",
+    facebook: "https://www.facebook.com/profile.php?id=61590554445166",
+    tiktok: "https://www.tiktok.com/@dineshrajsapkotaofficial",
+    mail: "https://tr.ee/AVF8TQOAER",
   },
   hours: [
     { day: "Monday – Friday", time: "8:00 AM – 6:00 PM" },
@@ -41,7 +42,7 @@ export const services = [
       "Roman & Venetian styles",
       "Motorised & smart-home options",
     ],
-    image: "1600210492493-0946911123ea",
+    image: "/images/services/blinds.jpg",
   },
   {
     slug: "curtains",
@@ -56,7 +57,7 @@ export const services = [
       "Pencil, pinch & wave pleats",
       "Tracks, rods & motorisation",
     ],
-    image: "1631679706909-1844bbd07221",
+    image: "/images/services/curtains.jpg",
   },
   {
     slug: "shutters",
@@ -71,7 +72,7 @@ export const services = [
       "Adjustable louvres for light control",
       "PVC & lead free materials",
     ],
-    image: "1615874959474-d609969a20ed",
+    image: "/images/services/shutters.jpg",
   },
   {
     slug: "flooring",
@@ -86,7 +87,7 @@ export const services = [
       "Scratch & water resistant options",
       "Expert subfloor preparation",
     ],
-    image: "1618221195710-dd6b41faaea6",
+    image: "/images/services/flooring.jpg",
   },
 ];
 

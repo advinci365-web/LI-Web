@@ -4,24 +4,25 @@ interface Props {
   title: string;
   align?: "left" | "center";
   tone?: "dark" | "light";
+  size?: "sm" | "lg";
   class?: string;
 }
 
-const { eyebrow, title, align = "left", tone = "dark", class: className = "" } = Astro.props;
+const { eyebrow, title, align = "left", tone = "dark", size = "lg", class: className = "" } = Astro.props;
 ---
 
 <div class:list={[align === "center" ? "text-center" : "text-left", className]}>
   {
     eyebrow && (
       <p class:list={["eyebrow", tone === "light" && "text-gold-300"]}>
-        <span class="h-px w-6 bg-current opacity-70" aria-hidden="true" />
         {eyebrow}
       </p>
     )
   }
   <h2
     class:list={[
-      "mt-3 text-3xl leading-tight sm:text-4xl lg:text-[2.75rem]",
+      "mt-3 leading-tight",
+      size === "lg" ? "text-3xl sm:text-4xl lg:text-[2.75rem]" : "text-xl sm:text-2xl",
       tone === "dark" ? "text-forest-800" : "text-white",
     ]}
   >
